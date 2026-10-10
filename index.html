@@ -14,10 +14,11 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="description" content="Previsioni meteo marine e indicazione prudenziale di navigabilità vicino alla tua posizione." />
 
-    <!-- Icons & Manifest -->
-    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
-    <link rel="manifest" href="./manifest.json" />
+    <!-- Canonical & PWA Links -->
+    <link rel="canonical" href="https://vanhelsing71.github.io/seawidget-web/" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/seawidget-web/icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/seawidget-web/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/seawidget-web/manifest.json" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,12 +27,12 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
     <script>
       // Service Worker registration for PWA offline capabilities
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').then(
+          navigator.serviceWorker.register('/seawidget-web/sw.js', { scope: '/seawidget-web/' }).then(
             (reg) => console.log('SW registrato con scope:', reg.scope),
             (err) => console.log('SW registrazione fallita:', err)
           );

@@ -2,25 +2,26 @@
   "name": "SeaWidget - Meteo Marino",
   "short_name": "SeaWidget",
   "description": "Previsioni meteo marine e indicazione di navigabilità vicino alla tua posizione.",
-  "start_url": "./",
-  "scope": "./",
+  "id": "/seawidget-web/",
+  "start_url": "/seawidget-web/",
+  "scope": "/seawidget-web/",
   "display": "standalone",
   "background_color": "#063247",
   "theme_color": "#063247",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "/seawidget-web/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "/seawidget-web/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "./icons/apple-touch-icon.png",
+      "src": "/seawidget-web/icons/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any maskable"

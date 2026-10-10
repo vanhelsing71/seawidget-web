@@ -1,18 +1,15 @@
-const CACHE_NAME = 'seawidget-cache-v2';
+const CACHE_NAME = 'seawidget-cache-v3';
 const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/apple-touch-icon.png',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon.svg',
-  './icons/ic_calm_sea.svg',
-  './icons/ic_caution_sea.svg',
-  './icons/ic_unsafe_sea.svg',
-  './images/calmo.jpg',
-  './images/agitato.jpg',
-  './images/grosso.jpg'
+  '/seawidget-web/',
+  '/seawidget-web/index.html',
+  '/seawidget-web/manifest.json',
+  '/seawidget-web/icons/apple-touch-icon.png',
+  '/seawidget-web/icons/icon-192.png',
+  '/seawidget-web/icons/icon-512.png',
+  '/seawidget-web/icons/icon.svg',
+  '/seawidget-web/icons/ic_calm_sea.svg',
+  '/seawidget-web/icons/ic_caution_sea.svg',
+  '/seawidget-web/icons/ic_unsafe_sea.svg'
 ];
 
 self.addEventListener('install', (event) => {
