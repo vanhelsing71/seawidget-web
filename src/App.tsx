@@ -9,6 +9,7 @@ import { ForecastDetail } from './components/ForecastDetail';
 import { TestModePanel } from './components/TestModePanel';
 import { LocationPicker } from './components/LocationPicker';
 import { Sliders, MapPin, Smartphone, Maximize2 } from 'lucide-react';
+import appLogo from './assets/icons/icon.svg';
 import './styles/app.css';
 
 export function App() {
@@ -182,7 +183,7 @@ export function App() {
         <header className="app-header">
           <div className="app-branding">
             <div className="brand-left">
-              <img src="/icons/icon.svg" alt="SeaWidget" className="app-logo" />
+              <img src={appLogo} alt="SeaWidget" className="app-logo" />
               <h1 className="app-title">SeaWidget</h1>
             </div>
             {isTestMode && <span className="test-pill-badge">Test Mode</span>}

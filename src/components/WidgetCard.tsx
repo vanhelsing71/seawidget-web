@@ -1,6 +1,12 @@
 import React from 'react';
 import { MarineForecast, NavigationAssessment } from '../types/marine';
 import { RefreshCw, ExternalLink } from 'lucide-react';
+import calmoImg from '../assets/images/calmo.jpg';
+import agitatoImg from '../assets/images/agitato.jpg';
+import grossoImg from '../assets/images/grosso.jpg';
+import iconCalmSvg from '../assets/icons/ic_calm_sea.svg';
+import iconCautionSvg from '../assets/icons/ic_caution_sea.svg';
+import iconUnsafeSvg from '../assets/icons/ic_unsafe_sea.svg';
 
 interface WidgetCardProps {
   forecast: MarineForecast | null;
@@ -26,17 +32,17 @@ export const WidgetCard: React.FC<WidgetCardProps> = ({
   // Sfondo corrispondente
   const bgImage =
     level === 'Good'
-      ? '/images/calmo.jpg'
+      ? calmoImg
       : level === 'Caution'
-      ? '/images/agitato.jpg'
-      : '/images/grosso.jpg';
+      ? agitatoImg
+      : grossoImg;
 
   const iconSrc =
     level === 'Good'
-      ? '/icons/ic_calm_sea.svg'
+      ? iconCalmSvg
       : level === 'Caution'
-      ? '/icons/ic_caution_sea.svg'
-      : '/icons/ic_unsafe_sea.svg';
+      ? iconCautionSvg
+      : iconUnsafeSvg;
 
   const statusColor =
     level === 'Good' ? '#7CFFB2' : level === 'Caution' ? '#FFD369' : '#FF7676';

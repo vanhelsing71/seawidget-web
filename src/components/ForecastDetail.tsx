@@ -2,6 +2,9 @@ import React from 'react';
 import { MarineForecast, NavigationAssessment } from '../types/marine';
 import { MetricBar } from './MetricBar';
 import { RefreshCw, ArrowLeft, MapPin, Compass, AlertCircle } from 'lucide-react';
+import calmoImg from '../assets/images/calmo.jpg';
+import agitatoImg from '../assets/images/agitato.jpg';
+import grossoImg from '../assets/images/grosso.jpg';
 
 interface ForecastDetailProps {
   forecast: MarineForecast;
@@ -28,10 +31,10 @@ export const ForecastDetail: React.FC<ForecastDetailProps> = ({
 
   const bgImage =
     level === 'Good'
-      ? '/images/calmo.jpg'
+      ? calmoImg
       : level === 'Caution'
-      ? '/images/agitato.jpg'
-      : '/images/grosso.jpg';
+      ? agitatoImg
+      : grossoImg;
 
   const statusColor =
     level === 'Good' ? '#7CFFB2' : level === 'Caution' ? '#FFD369' : '#FF7676';
