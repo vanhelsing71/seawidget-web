@@ -86,7 +86,7 @@ I file compilati si troveranno nella cartella `dist/`, pronti per qualsiasi web 
 
 ---
 
-## ⚓ Logica Nautica & Algoritmo di Valutazione
+## ⚓ Logica Nautica e Algoritmo di Valutazione
 
 L'applicazione riproduce fedelmente l'algoritmo di valutazione marittima calibrato per imbarcazioni da diporto e catamarani:
 
