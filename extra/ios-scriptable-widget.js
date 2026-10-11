@@ -104,13 +104,14 @@ async function createWidget() {
   detailsEl.font = Font.systemFont(12);
   detailsEl.textColor = new Color('#ffffff', 0.9);
 
+  widget.url = 'https://vanhelsing71.github.io/seawidget-web/';
   return widget;
 }
 
 const widget = await createWidget();
 if (config.runsInWidget) {
-  Scriptable.setWidget(widget);
+  Script.setWidget(widget);
 } else {
   widget.presentMedium();
 }
-Scriptable.complete();
+Script.complete();
