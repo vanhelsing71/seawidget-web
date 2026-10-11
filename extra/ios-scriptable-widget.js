@@ -3,17 +3,34 @@
 // icon-color: blue; icon-glyph: water;
 /**
  * SeaWidget per Scriptable (iOS Home Screen Widget)
- * Replica esatta del widget Android di SeaWidget direttamente sulla Home Screen di iOS!
- *
- * Requisiti:
- * 1. Scarica l'app gratuita "Scriptable" da App Store.
- * 2. Crea un nuovo script, incolla questo codice e nominalo "SeaWidget".
- * 3. Aggiungi un widget Scriptable (Medio) alla schermata Home del tuo iPhone.
+ * Replica esatta del widget Android con sfondo fotografico dinamico del mare!
  */
 
-// Imposta qui le coordinate di default (o lascia vuoto per usare il GPS del telefono)
+// Coordinate di default (se il GPS non è disponibile o in attesa del primo fix)
 const DEFAULT_LAT = 40.5507; // Capri / Golfo di Napoli
 const DEFAULT_LON = 14.2426;
+
+// Funzione per scaricare e memorizzare in cache locale le immagini (funziona anche offline!)
+async function getCachedImage(filename) {
+  const fm = FileManager.local();
+  const dir = fm.documentsDirectory();
+  const path = fm.joinPath(dir, filename);
+  if (fm.fileExists(path)) {
+    return fm.readImage(path);
+  }
+  try {
+    const url = `https://raw.githubusercontent.com/vanhelsing71/seawidget-web/main/public/images/${filename}`;
+    const req = new Request(url);
+    const img = await req.loadImage();
+    if (img) {
+      fm.writeImage(path, img);
+      return img;
+    }
+  } catch (e) {
+    console.log('Impossibile scaricare ' + filename + ': ' + e);
+  }
+  return null;
+}
 
 async function createWidget() {
   const widget = new ListWidget();
@@ -59,7 +76,7 @@ async function createWidget() {
     console.log('Errore di rete: ' + e);
   }
 
-  // Calcolo Navigabilità
+  // Calcolo Navigabilità (algoritmo SeaWidget)
   const limitingWave = Math.max(waveH, maxWaveH);
   const period = Math.max(waveP, 1.0);
   const steepness = limitingWave / period;
@@ -68,43 +85,71 @@ async function createWidget() {
 
   let statusText = 'Navigabile';
   let statusColor = new Color('#7CFFB2');
+  let bgFilename = 'calmo.jpg';
 
   if (limitingWave > 2.5 || currentV > 8.0 || isVerySteep || windS > 55.0) {
     statusText = 'Non consigliato';
     statusColor = new Color('#FF7676');
+    bgFilename = 'grosso.jpg';
   } else if (limitingWave > 1.5 || currentV > 5.0 || isSteep || windS > 40.0) {
     statusText = 'Prudenza';
     statusColor = new Color('#FFD369');
+    bgFilename = 'agitato.jpg';
   }
 
-  // Costruzione Grafica Widget
+  // Impostazione sfondo fotografico dinamico
+  const bgImage = await getCachedImage(bgFilename);
+  if (bgImage) {
+    widget.backgroundImage = bgImage;
+  }
+
+  // Costruzione Grafica Widget con ombre per massima leggibilità
   const headerStack = widget.addStack();
   headerStack.layoutHorizontally();
 
   const titleText = headerStack.addText(locName);
   titleText.font = Font.boldSystemFont(13);
   titleText.textColor = Color.white();
+  titleText.shadowColor = new Color('#000000', 0.9);
+  titleText.shadowOffset = new Point(1, 1);
+  titleText.shadowRadius = 3;
+
   headerStack.addSpacer();
 
   const now = new Date();
-  const timeText = headerStack.addText(`${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`);
+  const timeText = headerStack.addText(
+    `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+  );
   timeText.font = Font.systemFont(11);
-  timeText.textColor = new Color('#B9D6E8', 0.7);
+  timeText.textColor = new Color('#ffffff', 0.85);
+  timeText.shadowColor = new Color('#000000', 0.9);
+  timeText.shadowOffset = new Point(1, 1);
+  timeText.shadowRadius = 3;
 
   widget.addSpacer(8);
 
   const statusEl = widget.addText(statusText);
   statusEl.font = Font.boldSystemFont(22);
   statusEl.textColor = statusColor;
+  statusEl.shadowColor = new Color('#000000', 0.95);
+  statusEl.shadowOffset = new Point(1, 2);
+  statusEl.shadowRadius = 4;
 
   widget.addSpacer(4);
 
-  const detailText = `Onda ${waveH.toFixed(1)} m, periodo ${waveP.toFixed(0)} s\nVento ${windS.toFixed(0)} km/h, corr. ${currentV.toFixed(1)} km/h${maxWaveH > waveH ? `\nPicco 6h ${maxWaveH.toFixed(1)} m` : ''}`;
+  const detailText = `Onda ${waveH.toFixed(1)} m, periodo ${waveP.toFixed(0)} s\nVento ${windS.toFixed(0)} km/h, corr. ${currentV.toFixed(1)} km/h${
+    maxWaveH > waveH ? `\nPicco 6h ${maxWaveH.toFixed(1)} m` : ''
+  }`;
   const detailsEl = widget.addText(detailText);
   detailsEl.font = Font.systemFont(12);
-  detailsEl.textColor = new Color('#ffffff', 0.9);
+  detailsEl.textColor = new Color('#ffffff', 0.95);
+  detailsEl.shadowColor = new Color('#000000', 0.9);
+  detailsEl.shadowOffset = new Point(1, 1);
+  detailsEl.shadowRadius = 3;
 
+  // Al tocco apre direttamente l'app SeaWidget
   widget.url = 'https://vanhelsing71.github.io/seawidget-web/';
+
   return widget;
 }
 
